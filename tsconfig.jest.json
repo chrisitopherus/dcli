@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmitHelpers": false,
+        "importHelpers": true,
+        "esModuleInterop": true,
+        "types": [
+            "jest",
+            "node"
+        ],
+        "outDir": "./.jest-cache" // or skip this if not emitting
+    },
+    "include": [
+        "src",
+        "tests"
+    ]
+}
