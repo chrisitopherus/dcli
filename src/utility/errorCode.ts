@@ -1,4 +1,26 @@
 export enum ErrorCode {
+    // loader
+
+    /**
+     * Command was not decorated with information or something else in not right.
+     */
+    CMD_INVALID,
+
+    // Validation issues in decorators or configuration
+
+    /**
+     * Command name is missing or empty.
+     */
+    CMD_MISSING_NAME,
+    /**
+     * Command description is missing or empty.
+     */
+    CMD_MISSING_DESCRIPTION,
+    /**
+     * Command alias was invalid.
+     */
+    CMD_INVALID_ALIAS,
+
     // Syntax/structure issues
 
     /**
