@@ -4,6 +4,26 @@ import { ErrorCode } from "./errorCode";
 export class CLIErrorFactory {
     private constructor() { }
 
+    // loader
+
+    public static invalidCommand(command: string) {
+        return new CLIError(`Invalid command encountered: '${command}'`, ErrorCode.CMD_INVALID);
+    }
+
+    // Validation errors
+
+    public static missingCommandName(name: string): CLIError {
+        return new CLIError(`Command '${name}' is missing a name definition. Define a non-empty 'name' in @Command()`, ErrorCode.CMD_MISSING_NAME);
+    }
+
+    public static missingCommandDescription(name: string): CLIError {
+        return new CLIError(`Command '${name}' is missing a description. Define a non-empty 'description' in @Command()`, ErrorCode.CMD_MISSING_DESCRIPTION);
+    }
+
+    public static invalidCommandAlias(alias: string | undefined, commandName: string) {
+        return new CLIError(`Command '${commandName}' was declared with an invalid alias = '${alias}'`, ErrorCode.CMD_INVALID_ALIAS);
+    }
+
     // Syntax/structure
     public static invalidPrefix(prefix: string): CLIError {
         return new CLIError(`Invalid option prefix: '${prefix}'`, ErrorCode.ARG_INVALID_PREFIX);
@@ -26,7 +46,7 @@ export class CLIErrorFactory {
     }
 
     // Lookup/validation
-    
+
     public static unknownOption(flag: string): CLIError {
         return new CLIError(`Unknown option: '${flag}'`, ErrorCode.ARG_UNKNOWN_OPTION);
     }
