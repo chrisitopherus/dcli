@@ -4,7 +4,7 @@ import { TypeConstructor } from "../utility";
 
 export interface LoadedCommand {
     name: string;
-    subcommand?: string;
+    subcommands?: LoadedCommand[];
     description: string;
     aliases: string[];
     default: boolean;
