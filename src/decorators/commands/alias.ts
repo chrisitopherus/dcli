@@ -1,6 +1,5 @@
 import { CLIError } from "../../core/cliError";
 import { CommandClass } from "../../types/core/command";
-import { CommandMetadata } from "../../types/decorators/command";
 import { Metadata, MetadataKey } from "../../utility/metadata";
 
 export function Alias(aliases: string | string[]) {
@@ -11,7 +10,7 @@ export function Alias(aliases: string | string[]) {
             if (!cleaned) throw CLIError.factory.invalidCommandAlias("<empty>", constructor.name);
         });
 
-        Metadata.defineOrUpdateMetadata<CommandMetadata>(
+        Metadata.defineOrUpdateMetadata(
             MetadataKey.Command,
             constructor,
             { aliases: value },
