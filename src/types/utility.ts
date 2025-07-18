@@ -2,6 +2,8 @@ import { PropertyName } from "utility-pickle";
 import { MetadataKey } from '../utility/metadata';
 import { CommandMetadata } from "./decorators/command";
 import { OptionMetadata } from "./decorators/options";
+
+export type PredicateFunc<T> = (value: T) => boolean;
 export type TypeConstructor<T> = (value: string) => T;
 export type TypedPropertyDecorator<T> = <K extends PropertyName, O extends Record<K, T>>(
     target: O,
