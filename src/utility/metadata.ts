@@ -48,12 +48,12 @@ export class Metadata {
      * Retrieves metadata if it exists, or sets it to a default value.
      * 
      * @param key - The metadata key.
-     * @param defaultValue - The default value if no metadata is defined yet.
      * @param target - The target object or class.
+     * @param defaultValue - The default value if no metadata is defined yet.
      * @param propertyKey - The optional property key for property-level metadata.
      * @returns The existing or newly set metadata.
      */
-    public static getOrInitMetadata<K extends keyof MetadataTypeMap>(key: K, defaultValue: MetadataTypeMap[K], target: object, propertyKey?: PropertyName): MetadataTypeMap[K] {
+    public static getOrDefineMetadata<K extends keyof MetadataTypeMap>(key: K, target: object, defaultValue: MetadataTypeMap[K], propertyKey?: PropertyName): MetadataTypeMap[K] {
         let metadata = this.getMetadata(key, target, propertyKey);
 
         if (metadata !== undefined) return metadata;
@@ -68,12 +68,12 @@ export class Metadata {
      * If no metadata is found, sets it to the provided value directly.
      * 
      * @param key - The metadata key.
-     * @param value - The new metadata to merge.
      * @param target - The target object or class.
+     * @param value - The new metadata to merge.
      * @param propertyKey - The optional property key for property-level metadata.
      * @returns The combined or newly set metadata.
      */
-    public static combineOrInitMetadata<K extends keyof MetadataTypeMap>(key: K, value: MetadataTypeMap[K], target: object, propertyKey?: PropertyName): MetadataTypeMap[K] {
+    public static combineOrDefineMetadata<K extends keyof MetadataTypeMap>(key: K, target: object, value: MetadataTypeMap[K], propertyKey?: PropertyName): MetadataTypeMap[K] {
         let metadata: MetadataTypeMap[K] | undefined = propertyKey ? Reflect.getMetadata(key, target, propertyKey) : Reflect.getMetadata(key, target);
         const combined = metadata ? Object.assign({}, metadata, value) : { ...value };
 
