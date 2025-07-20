@@ -7,11 +7,13 @@ import { CLICommand } from "./command";
     aliases: ["v"]
 })
 export class VersionCommand extends CLICommand {
-    public constructor() {
+    private readonly version: string;
+    public constructor(version: string = "1.0.0") {
         super();
+        this.version = version;
     }
 
     public override run(): void | Promise<void> {
-        throw new Error("Method not implemented.");
+        console.log(this.version);
     }
 }
