@@ -1,102 +1,22 @@
 export enum ErrorCode {
-    // loader
+    // Command lifecycle / runtime
+    CMD_CONFLICT_ALIAS = "CMD_CONFLICT_ALIAS",
 
-    /**
-     * Command was not decorated with information or something else in not right.
-     */
-    CMD_INVALID,
+    // Decorators
+    DECORATOR_INVALID_ALIAS = "DECORATOR_INVALID_ALIAS",
+    DECORATOR_MISSING_REQUIRED_INFORMATION = "DECORATOR_MISSING_REQUIRED_INFORMATION",
 
-    // Validation issues in decorators or configuration
+    // Validation
+    VALIDATION_MISSING_REQUIRED_PROPERTY = "VALIDATION_MISSING_REQUIRED_PROPERTY",
+    VALIDATION_INVALID_TYPE = "VALIDATION_INVALID_TYPE",
 
-    /**
-     * Command name is missing or empty.
-     */
-    CMD_MISSING_NAME,
-    /**
-     * Command description is missing or empty.
-     */
-    CMD_MISSING_DESCRIPTION,
-    /**
-     * Command alias was invalid.
-     */
-    CMD_INVALID_ALIAS,
+    // Parser
+    PARSER_UNKNOWN_FLAG = "PARSER_UNKNOWN_FLAG",
+    PARSER_MISSING_VALUE = "PARSER_MISSING_VALUE",
 
-    // Syntax/structure issues
+    // Loader
+    LOADER_INVALID_CMD = "LOADER_INVALID_CMD",
 
-    /**
-     * Option key must start with the defined prefix.
-     */
-    ARG_INVALID_PREFIX,
-    /**
-     * Option key is empty
-     */
-    ARG_EMPTY_KEY,
-    /**
-     * Found a non-option in option context.
-     */
-    ARG_NONOPT_KEY,
-    /**
-     * Found 'prefix' with no name.
-     */
-    ARG_NONAME_KEY,
-    /**
-     * Invalid shortopt like -foobar.
-     */
-    ARG_SHORTOPT_TOOLONG,
-
-    // Lookup/validation failures
-
-    /**
-     * Option not recognized.
-     */
-    ARG_UNKNOWN_OPTION,
-    /**
-     * Subcommand doesn't exist.
-     */
-    ARG_UNKNOWN_COMMAND,
-    /**
-     * Same option repeated where not allowed.
-     */
-    ARG_DUPLICATE_OPTION,
-
-    // Required or missing data
-
-    /**
-     * Required arg not set.
-     */
-    ARG_MISSING_REQUIRED,
-    /**
-     * Option expected value, got none.
-     */
-    ARG_MISSING_VALUE,
-    /**
-     * Got value when it shouldn't have.
-     */
-    ARG_ENCOUNTERED_UNEXPECTED_VALUE,
-
-    // Type/constraint issues
-
-    /**
-     * Parsing to expected type failed.
-     */
-    ARG_INVALID_TYPE,
-    /**
-     * Options used together that shouldn't be.
-     */
-    ARG_CONFLICTING_OPTIONS,
-    /**
-     * More args than expected.
-     */
-    ARG_TOO_MANY_POSITIONALS,
-    /**
-     * Part of a group was missing.
-     */
-    ARG_INCOMPLETE_OPTION_GROUP,
-
-    // UX-related
-
-    /**
-     * Deprecated flag used.
-     */
-    ARG_DEPRECATED_OPTION
+    // Internal
+    INTERNAL_UNEXPECTED = "INTERNAL_UNEXPECTED"
 }
