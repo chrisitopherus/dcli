@@ -1,5 +1,5 @@
-import { Command } from "../../core/commands/command";
-import { OptionKind } from "../../utility/options/optionKind";
+import { CLICommand } from "../../core/commands/command";
+import { OptionKind } from "../../utility/options/kind";
 import { TypeConstructor } from "../utility";
 
 export interface LoadedCommand {
@@ -9,7 +9,7 @@ export interface LoadedCommand {
     aliases: string[];
     default: boolean;
     hidden: boolean;
-    commandInstance: Command;
+    commandInstance: CLICommand;
     options: LoadedOption[];
 }
 
