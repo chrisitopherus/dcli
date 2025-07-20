@@ -1,6 +1,5 @@
 import "reflect-metadata";
-import { PropertyName } from "utility-pickle";
-import { MetadataTypeMap } from "../types/utility";
+import { Maybe, MetadataTypeMap, PropertyKey } from "../types/utility";
 
 /**
  * Enum defining keys for metadata storage.
@@ -37,7 +36,7 @@ export class Metadata {
         target: object,
         defaultValue: MetadataTypeMap[K],
         updateHandler: (metadata: MetadataTypeMap[K]) => MetadataTypeMap[K],
-        propertyKey?: PropertyName
+        propertyKey?: PropertyKey
     ): MetadataTypeMap[K] {
         let metadata = this.getMetadata(key, target, propertyKey);
         metadata = metadata === undefined ? defaultValue : updateHandler(metadata);
@@ -53,7 +52,12 @@ export class Metadata {
      * @param propertyKey - The optional property key for property-level metadata.
      * @returns The existing or newly set metadata.
      */
-    public static getOrDefineMetadata<K extends keyof MetadataTypeMap>(key: K, target: object, defaultValue: MetadataTypeMap[K], propertyKey?: PropertyName): MetadataTypeMap[K] {
+    public static getOrDefineMetadata<K extends keyof MetadataTypeMap>(
+        key: K,
+        target: object,
+        defaultValue: MetadataTypeMap[K],
+        propertyKey?: PropertyKey
+    ): MetadataTypeMap[K] {
         let metadata = this.getMetadata(key, target, propertyKey);
 
         if (metadata !== undefined) return metadata;
@@ -73,7 +77,12 @@ export class Metadata {
      * @param propertyKey - The optional property key for property-level metadata.
      * @returns The combined or newly set metadata.
      */
-    public static combineOrDefineMetadata<K extends keyof MetadataTypeMap>(key: K, target: object, value: MetadataTypeMap[K], propertyKey?: PropertyName): MetadataTypeMap[K] {
+    public static combineOrDefineMetadata<K extends keyof MetadataTypeMap>(
+        key: K,
+        target: object,
+        value: MetadataTypeMap[K],
+        propertyKey?: PropertyKey
+    ): MetadataTypeMap[K] {
         let metadata: MetadataTypeMap[K] | undefined = propertyKey ? Reflect.getMetadata(key, target, propertyKey) : Reflect.getMetadata(key, target);
         const combined = metadata ? Object.assign({}, metadata, value) : { ...value };
 
@@ -88,7 +97,11 @@ export class Metadata {
      * @param propertyKey - The optional property key for property-level metadata.
      * @returns The metadata value or undefined.
      */
-    public static getMetadata<K extends keyof MetadataTypeMap>(key: K, target: object, propertyKey?: PropertyName): MetadataTypeMap[K] | undefined {
+    public static getMetadata<K extends keyof MetadataTypeMap>(
+        key: K,
+        target: object,
+        propertyKey?: PropertyKey
+    ): Maybe<MetadataTypeMap[K]> {
         return propertyKey
             ? Reflect.getMetadata(key, target, propertyKey)
             : Reflect.getMetadata(key, target);
@@ -102,7 +115,12 @@ export class Metadata {
      * @param propertyKey - The optional property key for property-level metadata. 
      * @returns The metadata that was set.
      */
-    public static defineMetadata<K extends keyof MetadataTypeMap>(key: K, value: MetadataTypeMap[K], target: object, propertyKey?: PropertyName): MetadataTypeMap[K] {
+    public static defineMetadata<K extends keyof MetadataTypeMap>(
+        key: K,
+        value: MetadataTypeMap[K],
+        target: object,
+        propertyKey?: PropertyKey
+    ): MetadataTypeMap[K] {
         if (propertyKey) return this.definePropertyMetadata(key, value, target, propertyKey);
         return this.defineClassMetadata(key, value, target);
     }
@@ -114,7 +132,11 @@ export class Metadata {
      * @param target - The target class or object.
      * @returns The class metadata that was set.
      */
-    private static defineClassMetadata<K extends keyof MetadataTypeMap>(key: K, value: MetadataTypeMap[K], target: object): MetadataTypeMap[K] {
+    private static defineClassMetadata<K extends keyof MetadataTypeMap>(
+        key: K,
+        value: MetadataTypeMap[K],
+        target: object
+    ): MetadataTypeMap[K] {
         Reflect.defineMetadata(key, value, target);
         return value;
     }
@@ -127,7 +149,12 @@ export class Metadata {
      * @param propertyKey - The optional property key for property-level metadata.
      * @returns The property metadata that was set.
      */
-    private static definePropertyMetadata<K extends keyof MetadataTypeMap>(key: K, value: MetadataTypeMap[K], target: object, propertyKey: PropertyName): MetadataTypeMap[K] {
+    private static definePropertyMetadata<K extends keyof MetadataTypeMap>(
+        key: K,
+        value: MetadataTypeMap[K],
+        target: object,
+        propertyKey: PropertyKey
+    ): MetadataTypeMap[K] {
         Reflect.defineMetadata(key, value, target, propertyKey);
         return value;
     }

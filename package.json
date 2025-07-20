@@ -39,7 +39,6 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "reflect-metadata": "^0.2.2",
-    "utility-pickle": "^0.1.0"
+    "reflect-metadata": "^0.2.2"
   }
 }
