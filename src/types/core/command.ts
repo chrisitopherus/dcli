@@ -1,3 +1,3 @@
-import { Command } from "../../core/commands/command";
+import { CLICommand } from "../../core/commands/command";
 
-export type CommandClass = new (...args: any[]) => Command;
+export type CommandClass = new (...args: any[]) => CLICommand;
