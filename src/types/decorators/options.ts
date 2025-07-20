@@ -10,7 +10,7 @@ export interface OptionInformation<T> {
     aliases?: string[];
 }
 
-export interface ArgumentInformation<T> {
+export interface PositionalInformation<T> {
     name: string;
     description: string;
     position: number;
