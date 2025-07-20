@@ -1,26 +1,25 @@
 import { CLIError } from "../../core/cliError";
 import { CommandClass } from "../../types/core/command";
+import { merge } from "../../utility/functions/merge";
 import { Metadata, MetadataKey } from "../../utility/metadata";
 
 export function Alias(aliases: string | string[]) {
     return function (constructor: CommandClass) {
+        if ((!Array.isArray(aliases) || aliases.length === 0) && typeof aliases !== "string") {
+            throw CLIError.factory.missingRequiredInformation(constructor.name, "alias");
+        }
+
         const value = typeof aliases === "string" ? [aliases] : aliases;
         value.forEach(alias => {
             const cleaned = alias?.trim();
-            if (!cleaned) throw CLIError.factory.invalidCommandAlias("<empty>", constructor.name);
+            if (!cleaned) throw CLIError.factory.invalidAlias(constructor.name, alias);
         });
 
         Metadata.defineOrUpdateMetadata(
             MetadataKey.Command,
             constructor,
             { aliases: value },
-            (metadata) => {
-                metadata.aliases = metadata.aliases !== undefined
-                    ? [...metadata.aliases, ...value]
-                    : value;
-
-                return metadata;
-            }
+            (metadata) => merge(metadata, { aliases: value })
         );
     }
 }
