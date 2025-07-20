@@ -1,6 +1,12 @@
-import { Command } from "./command";
+import { Command } from "../../decorators/commands/command";
+import { CLICommand } from "./command";
 
-export class HelpCommand extends Command {
+@Command({
+    name: "help",
+    description: "Displays available commands and usage information",
+    aliases: ["h"]
+})
+export class HelpCommand extends CLICommand {
     public constructor() {
         super();
     }

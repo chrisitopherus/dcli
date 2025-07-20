@@ -1,6 +1,12 @@
-import { Command } from "./command";
+import { Command } from "../../decorators/commands/command";
+import { CLICommand } from "./command";
 
-export class VersionCommand extends Command {
+@Command({
+    name: "version",
+    description: "Displays the current CLI version",
+    aliases: ["v"]
+})
+export class VersionCommand extends CLICommand {
     public constructor() {
         super();
     }
