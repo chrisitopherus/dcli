@@ -1,11 +1,11 @@
 import { isPlainObject } from "./guards/isPlainObject";
 
-export function merge<T extends Record<string, unknown>, U extends Record<string, unknown>>(
+export function merge<T extends object>(
     existing: Partial<T>,
-    incoming: Partial<U>
-): T & U {
+    incoming: Partial<T>
+): T {
     const result: any = {};
-    const keys = new Set([...Object.keys(existing), ...Object.keys(incoming)]);
+    const keys = new Set([...Object.keys(existing), ...Object.keys(incoming)]) as Set<keyof T>;
 
     for (const key of keys) {
         const existingValue = existing[key];
