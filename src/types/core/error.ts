@@ -1,0 +1,1 @@
+export type CLIErrorSource = "decorator" | "parser" | "loader";
