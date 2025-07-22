@@ -1,7 +1,7 @@
 {
   "name": "dcli",
   "version": "1.0.0",
-  "description": "",
+  "description": "Decorator based CLI toolkit for TypeScript",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -19,7 +19,14 @@
     "type": "git",
     "url": "git+https://github.com/chrisitopherus/dcli.git"
   },
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "command-line",
+    "decorator",
+    "typescript",
+    "framework",
+    "parser"
+  ],
   "author": "chrisitopherus",
   "license": "MIT",
   "bugs": {
