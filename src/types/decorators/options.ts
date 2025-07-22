@@ -34,12 +34,12 @@ export interface VariadicInformation<T> {
 }
 
 export interface OptionMetadata {
+    kind: OptionKind;
     name?: string;
     description?: string;
     position?: number;
     type?: TypeConstructor<unknown>;
     required?: boolean;
     aliases?: string[];
-    kind?: OptionKind;
     allowedValues?: unknown[];
 }
