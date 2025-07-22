@@ -1,6 +1,6 @@
 import { CLIError } from "../../core/cliError";
 import { CommandClass } from "../../types/core/command";
-import { merge } from "../../utility/functions/merge";
+import { patch } from "../../utility/functions/patch";
 import { Metadata, MetadataKey } from "../../utility/metadata";
 
 export function Alias(aliases: string | string[]) {
@@ -19,7 +19,7 @@ export function Alias(aliases: string | string[]) {
             MetadataKey.Command,
             constructor,
             { aliases: value },
-            (metadata) => merge(metadata, { aliases: value })
+            (metadata) => patch(metadata, { aliases: value })
         );
     }
 }

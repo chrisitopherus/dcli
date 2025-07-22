@@ -1,7 +1,7 @@
 import { CLIError } from "../../core/cliError";
 import { OptionMetadata, VariadicInformation } from "../../types/decorators/options";
 import { TypedPropertyDecorator } from "../../types/utility";
-import { merge } from "../../utility/functions/merge";
+import { patch } from "../../utility/functions/patch";
 import { Metadata, MetadataKey } from "../../utility/metadata";
 import { OptionKind } from "../../utility/options/kind";
 
@@ -16,7 +16,7 @@ export function Variadic<T>(information: VariadicInformation<T>): TypedPropertyD
             MetadataKey.Option,
             target,
             data,
-            (metadata) => merge(metadata, data),
+            (metadata) => patch(metadata, data),
             propertyKey
         );
     };

@@ -1,5 +1,5 @@
 import { CommandClass } from "../../types/core/command";
-import { merge } from "../../utility/functions/merge";
+import { patch } from "../../utility/functions/patch";
 import { Metadata, MetadataKey } from "../../utility/metadata";
 
 export function Default() {
@@ -8,7 +8,7 @@ export function Default() {
             MetadataKey.Command,
             constructor,
             { default: true },
-            (metadata) => merge(metadata, { default: true })
+            (metadata) => patch(metadata, { default: true })
         );
     }
 }

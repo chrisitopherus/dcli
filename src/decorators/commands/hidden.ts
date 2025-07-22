@@ -1,5 +1,5 @@
 import { CommandClass } from "../../types/core/command";
-import { merge } from "../../utility/functions/merge";
+import { patch } from "../../utility/functions/patch";
 import { Metadata, MetadataKey } from "../../utility/metadata";
 
 export function Hidden() {
@@ -8,7 +8,7 @@ export function Hidden() {
             MetadataKey.Command,
             constructor,
             { hidden: true },
-            (metadata) => merge(metadata, { hidden: true })
+            (metadata) => patch(metadata, { hidden: true })
         );
     }
 }

@@ -1,7 +1,7 @@
 import { CLIError } from '../../core/cliError';
 import { CommandClass } from '../../types/core/command';
 import { CommandInformation } from '../../types/decorators/command';
-import { merge } from '../../utility/functions/merge';
+import { patch } from '../../utility/functions/patch';
 import { Metadata, MetadataKey } from '../../utility/metadata';
 export function Command(information: CommandInformation) {
     return function (constructor: CommandClass) {
@@ -12,7 +12,7 @@ export function Command(information: CommandInformation) {
             MetadataKey.Command,
             constructor,
             { ...information },
-            (existing) => merge(existing, information)
+            (existing) => patch(existing, information)
         );
     }
 }
