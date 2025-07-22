@@ -1,12 +1,11 @@
 import { ParserContext } from "../../core/parser/parserContext";
-import { OptionKind } from "../../utility/options/optionKind";
+import { OptionKind } from "../../utility/options/kind";
 import { Maybe } from "../utility";
 
 export interface ParsedCommand {
     name: string;
     subCommandName?: string;
     options: ParsedOption[];
-    args: ParsedArgument[];
 }
 
 export interface ParsedBaseInformation {
@@ -24,7 +23,7 @@ export interface ParsedValueOption extends ParsedBaseInformation {
     kind: OptionKind.OPTION;
 }
 
-export interface ParsedArg extends ParsedBaseInformation {
+export interface ParsedPositional extends ParsedBaseInformation {
     index: number;
     value: string;
     kind: OptionKind.POSITIONAL;
@@ -36,9 +35,7 @@ export interface ParsedVariadicArgument extends ParsedBaseInformation {
     kind: OptionKind.VARIADIC;
 }
 
-export type ParsedOption = ParsedFlag | ParsedValueOption;
-
-export type ParsedArgument = ParsedArg | ParsedVariadicArgument;
+export type ParsedOption = ParsedFlag | ParsedValueOption | ParsedPositional | ParsedVariadicArgument;
 
 export interface ParserStep {
     handle(context: ParserContext): Maybe<ParserStep>;
