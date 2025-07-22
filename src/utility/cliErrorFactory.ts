@@ -1,4 +1,5 @@
 import { CLIError } from "../core/cliError";
+import { CLIErrorSource } from "../types/core/error";
 import { ErrorCode } from "./errorCode";
 
 export class CLIErrorFactory {
@@ -6,25 +7,28 @@ export class CLIErrorFactory {
 
     // decorator
 
-    public static missingRequiredInformation(target: string, field: string): CLIError {
+    public static missingRequiredInformation(target: string, field: string, source?: CLIErrorSource): CLIError {
         return new CLIError(
             `Decorator on '${target}' missing required property '${field}'`,
             ErrorCode.DECORATOR_MISSING_REQUIRED_INFORMATION,
-            "decorator"
+            source ?? "decorator"
         );
     }
 
-    public static invalidAlias(target: string, alias: string): CLIError {
+    public static invalidAlias(target: string, alias: string, source?: CLIErrorSource): CLIError {
         return new CLIError(
             `Decorator on '${target}' received an invalid alias: '${alias}'`,
             ErrorCode.DECORATOR_INVALID_ALIAS,
-            "decorator"
+            source ?? "decorator"
         );
     }
 
     // loader
 
-    public static invalidCommand(command: string): CLIError {
-        return new CLIError(`Invalid command encountered: '${command}'`, ErrorCode.LOADER_INVALID_CMD, "loader");
+    public static invalidCommand(command: string, source?: CLIErrorSource): CLIError {
+        return new CLIError(
+            `Invalid command encountered: '${command}'`,
+            ErrorCode.LOADER_INVALID_CMD,
+            source ?? "loader");
     }
 }
