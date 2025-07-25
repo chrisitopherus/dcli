@@ -1,4 +1,6 @@
 import { LoadedCommand } from "../../types/core/loader";
+import { CommandFindResult } from "../../types/core/registry";
+import { Maybe } from "../../types/utility";
 
 /**
  * A registry for storing and resolving CLI commands by name or alias.
@@ -28,11 +30,11 @@ export class CommandRegistry {
      * `Note`: Matching is case-sensitive by default.
      * 
      * @param inputParts - The user input tokens (e.g., `["config", "set"]` or `["cfg", "set"]`).
-     * @returns The matched `LoadedCommand`, or `undefined` if no match was found.
+     * @returns The matched {@link LoadedCommand}, or `undefined` if no match was found.
      */
     public getCommand(inputParts: string[]) {
         let currentLevel = this.commands;
-        let found: LoadedCommand | undefined;
+        let found: Maybe<LoadedCommand>;
 
         // Starting with all registered commands (level), we traverse the input parts by resolving each segment to a command.
         // At each resolved command, we set its subcommands as the new level.
@@ -47,5 +49,36 @@ export class CommandRegistry {
         }
 
         return found;
+    }
+
+    /**
+    * Traverses the input tokens and resolves as deep as possible into the command hierarchy.
+    * 
+    * Stops on the first token that doesn't match any command or subcommand.
+    *
+    * @param inputParts - The user input tokens (e.g., `["cfg", "set", "--key", "value"]`).
+    * @returns An object with the resolved {@link LoadedCommand} (if found) and the number of matched tokens.
+    */
+    public findCommand(inputParts: string[]): CommandFindResult {
+        let currentLevel = this.commands;
+        let found: Maybe<LoadedCommand>;
+        let depth = 0;
+
+        for (const input of inputParts) {
+            let match = currentLevel.find(
+                cmd => cmd.name === input || cmd.aliases.includes(input)
+            );
+
+            if (!match) break;
+
+            found = match;
+            depth++;
+            currentLevel = found.subcommands ?? [];
+        }
+
+        return {
+            command: found,
+            matchedCount: depth
+        };
     }
 }
