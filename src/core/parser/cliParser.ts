@@ -2,11 +2,12 @@ import { ParserStep } from "../../types/core/parser";
 import { Maybe } from "../../types/utility";
 import { ParserContext } from "./parserContext";
 import { CommandParserStep } from "./steps/commandParserStep";
+import { CommandRegistry } from '../registry/commandRegistry';
 
 export class CLIParser {
-    // TODO: supportedCommands should be the loaded commands.
-    public constructor(supportedCommands: any[]) {
-
+    private readonly commandRegistry: CommandRegistry;
+    public constructor(commandRegistry: CommandRegistry) {
+        this.commandRegistry = commandRegistry;
     }
 
     public parse(args: string[]) {
@@ -17,15 +18,22 @@ export class CLIParser {
                 step = this.determineNextStep(context);
             }
 
-            step = step.handle(context);
+            const result = step.handle(context);
+            
+            if (!result.success) {
+                // error
+                throw result.error;
+            }
+
+            step = result.next;
         }
 
         // finished parsing
 
-        return context.command;
+        return context.progress.command;
     }
 
     private determineNextStep(context: ParserContext): ParserStep {
-        return new CommandParserStep();
+        return new CommandParserStep(this.commandRegistry);
     }
 }
