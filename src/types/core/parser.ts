@@ -1,10 +1,12 @@
+import { CLIError } from "../../core/cliError";
+import { CLICommand } from "../../core/commands/command";
 import { ParserContext } from "../../core/parser/parserContext";
 import { OptionKind } from "../../utility/options/kind";
-import { Maybe } from "../utility";
+import { Maybe } from '../utility';
+import { LoadedCommand } from "./loader";
 
 export interface ParsedCommand {
-    name: string;
-    subCommandName?: string;
+    commandInstance?: CLICommand;
     options: ParsedOption[];
 }
 
@@ -37,6 +39,24 @@ export interface ParsedVariadicArgument extends ParsedBaseInformation {
 
 export type ParsedOption = ParsedFlag | ParsedValueOption | ParsedPositional | ParsedVariadicArgument;
 
+export interface ParserStepSuccess {
+    success: true;
+    next?: ParserStep;
+}
+
+export interface ParserStepFailure {
+    success: false;
+    error: CLIError;
+}
+
+export type ParserStepResult = ParserStepSuccess | ParserStepFailure;
+
 export interface ParserStep {
-    handle(context: ParserContext): Maybe<ParserStep>;
+    handle(context: ParserContext): ParserStepResult;
+}
+
+export interface ParserProgress {
+    command?: ParsedCommand;
+    commandInformation?: LoadedCommand;
+    positionalIndex: number;
 }
