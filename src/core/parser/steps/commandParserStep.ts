@@ -20,12 +20,7 @@ export class CommandParserStep implements ParserStep {
             error: new CLIError("", ErrorCode.PARSER_UNKNOWN_FLAG, "parser")
         }
 
-        context.progress.commandInformation = command;
-
-        context.progress.command = {
-            commandInstance: command.commandInstance,
-            options: []
-        }
+        context.setCommand(command);
 
         return {
             success: true,

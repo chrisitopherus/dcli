@@ -20,12 +20,12 @@ export class OptionParserStep implements ParserStep {
         }
 
         const value = this.optionInformation.type(token) as string;
-        context.progress.command?.options.push({
+        context.addParsedOption({
             name: this.optionInformation.name,
             kind: OptionKind.OPTION,
             value,
             raw: token
-        });
+        })
 
         return {
             success: true,

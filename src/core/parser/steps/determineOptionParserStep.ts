@@ -9,10 +9,11 @@ export class DetermineOptionParserStep implements ParserStep {
     public constructor() { }
 
     public handle(context: ParserContext): ParserStepResult {
-        if (!context.progress.commandInformation) throw new Error("No Command, No parsing.");
+        const command = context.getParsedCommand();
+        if (!command) throw new Error("No Command, No parsing.");
         const token = context.consume();
 
-        const foundOption = context.progress.commandInformation.options.find((option) => option.name === token || (token && option.aliases.includes(token)));
+        const foundOption = token ? context.findOption(token) : undefined;
 
         if (!foundOption) return {
             success: true,

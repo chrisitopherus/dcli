@@ -30,7 +30,7 @@ export class CLIParser {
 
         // finished parsing
 
-        return context.progress.command;
+        return context.getParsedCommand();
     }
 
     private determineNextStep(context: ParserContext): ParserStep {
