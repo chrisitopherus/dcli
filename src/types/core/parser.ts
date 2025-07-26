@@ -55,8 +55,6 @@ export interface ParserStep {
     handle(context: ParserContext): ParserStepResult;
 }
 
-export interface ParserProgress {
-    command?: ParsedCommand;
-    commandInformation?: LoadedCommand;
-    positionalIndex: number;
+export interface ParserTrace {
+    parsedToken: string[];
 }
