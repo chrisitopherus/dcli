@@ -1,6 +1,11 @@
 import { CLICommand } from "../../core/commands/command";
 import { OptionKind } from "../../utility/options/kind";
-import { TypeConstructor } from "../utility";
+import { PropertyKey, TypeConstructor } from "../utility";
+
+export interface LoadedCommandOptions {
+    positional: LoadedPositionalOption[];
+    named: LoadedOption[];
+}
 
 export interface LoadedCommand {
     name: string;
@@ -9,17 +14,21 @@ export interface LoadedCommand {
     default: boolean;
     hidden: boolean;
     commandInstance: CLICommand;
-    options: LoadedOption[];
+    options: LoadedCommandOptions;
     subcommands: LoadedCommand[];
 }
 
 export interface LoadedOption {
     name: string;
-    propertyName: PropertyKey;
+    propertyKey: PropertyKey;
     description: string;
     required: boolean;
     aliases: string[];
     type: TypeConstructor<unknown>;
     kind: OptionKind;
     allowedValues?: unknown[];
+}
+
+export interface LoadedPositionalOption extends LoadedOption {
+    position: number;
 }
