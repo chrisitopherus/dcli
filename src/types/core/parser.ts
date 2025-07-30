@@ -2,8 +2,7 @@ import { CLIError } from "../../core/cliError";
 import { CLICommand } from "../../core/commands/command";
 import { ParserContext } from "../../core/parser/parserContext";
 import { OptionKind } from "../../utility/options/kind";
-import { Maybe } from '../utility';
-import { LoadedCommand } from "./loader";
+import { Maybe, PropertyKey } from '../utility';
 
 export interface ParsedCommand {
     commandInstance?: CLICommand;
@@ -12,6 +11,7 @@ export interface ParsedCommand {
 
 export interface ParsedBaseInformation {
     raw: string;
+    propertyKey: PropertyKey;
 }
 
 export interface ParsedFlag extends ParsedBaseInformation {
@@ -21,19 +21,19 @@ export interface ParsedFlag extends ParsedBaseInformation {
 
 export interface ParsedValueOption extends ParsedBaseInformation {
     name: string;
-    value: string;
+    value: unknown;
     kind: OptionKind.OPTION;
 }
 
 export interface ParsedPositional extends ParsedBaseInformation {
-    index: number;
-    value: string;
+    position: number;
+    value: unknown;
     kind: OptionKind.POSITIONAL;
 }
 
 export interface ParsedVariadicArgument extends ParsedBaseInformation {
-    index: number;
-    value: string[];
+    position: number;
+    value: unknown[];
     kind: OptionKind.VARIADIC;
 }
 
@@ -41,7 +41,7 @@ export type ParsedOption = ParsedFlag | ParsedValueOption | ParsedPositional | P
 
 export interface ParserStepSuccess {
     success: true;
-    next?: ParserStep;
+    next: Maybe<ParserStep>;
 }
 
 export interface ParserStepFailure {
