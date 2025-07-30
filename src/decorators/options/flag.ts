@@ -10,7 +10,7 @@ export function Flag(information: FlagInformation): TypedPropertyDecorator<boole
         if (information.name === undefined || information.name === "") throw CLIError.factory.missingRequiredInformation(`${target.constructor.name}.${String(propertyKey)}`, "name");
         if (information.description === undefined || information.description === "") throw CLIError.factory.missingRequiredInformation(`${target.constructor.name}.${String(propertyKey)}`, "description");
 
-        const data: OptionMetadata = { ...information, kind: OptionKind.FLAG }
+        const data: OptionMetadata = { ...information, type: Boolean, kind: OptionKind.FLAG }
         Metadata.defineOrUpdateMetadata(
             MetadataKey.Option,
             target,
