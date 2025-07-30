@@ -12,14 +12,14 @@ export class CLIParser {
 
     public parse(args: string[]) {
         const context = new ParserContext(args);
-        let step: Maybe<ParserStep> = undefined;
+        let step: Maybe<ParserStep> = new CommandParserStep(this.commandRegistry);
         while (context.hasMore()) {
             if (!step) {
-                step = this.determineNextStep(context);
+                break;
             }
 
             const result = step.handle(context);
-            
+
             if (!result.success) {
                 // error
                 throw result.error;
@@ -31,9 +31,5 @@ export class CLIParser {
         // finished parsing
 
         return context.getParsedCommand();
-    }
-
-    private determineNextStep(context: ParserContext): ParserStep {
-        return new CommandParserStep(this.commandRegistry);
     }
 }
