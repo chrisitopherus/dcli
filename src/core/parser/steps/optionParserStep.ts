@@ -6,25 +6,31 @@ import { ParserContext } from "../parserContext";
 import { DetermineOptionParserStep } from "./determineOptionParserStep";
 
 export class OptionParserStep implements ParserStep {
-    private readonly optionInformation: LoadedOption;
-    public constructor(optionInformation: LoadedOption) {
-        this.optionInformation = optionInformation;
+    public constructor() {
     }
 
     public handle(context: ParserContext): ParserStepResult {
-        const token = context.consume();
-        if (!token) return {
+        const option = context.consumeNamedOption();
+        if (!option) return {
             success: false,
             // TODO: create right error
-            error: CLIError.factory.invalidCommand("No value.")
+            error: CLIError.factory.invalidCommand("No valid option token.")
         }
 
-        const value = this.optionInformation.type(token) as string;
+        const valueToken = context.consume();
+        if (!valueToken) return {
+            success: false,
+            // TODO: create right error
+            error: CLIError.factory.invalidCommand("No value token.")
+        }
+
+        const value = option.type(valueToken) as string;
         context.addParsedOption({
-            name: this.optionInformation.name,
+            name: option.name,
             kind: OptionKind.OPTION,
             value,
-            raw: token
+            raw: valueToken,
+            propertyKey: option.propertyKey
         })
 
         return {
