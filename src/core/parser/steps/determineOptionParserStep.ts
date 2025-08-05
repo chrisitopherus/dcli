@@ -27,17 +27,7 @@ export class DetermineOptionParserStep implements ParserStep {
         }
 
         if (!option) return;
-
-        // TODO: prefer variadic when optional positionals are encountered
-        /*
-            For each positional option:
-            Check if the current option is optional.
-            Look ahead to see if there are:
-            Enough arguments left to still satisfy all required positionals after it, or
-            Any arguments reserved for a variadic positional later.
-            If not enough args remain, skip this optional (set it undefined) and let variadic absorb the rest.
-        */
-
+        
         return this.optionStepFactory.create(option.kind);
     }
 }

@@ -1,12 +1,11 @@
 import { LoadedCommand, LoadedCommandOptions } from "../../types/core/loader";
 import { ParsedOption } from "../../types/core/parser";
-import { Maybe } from "../../types/utility";
 import { CLICommand } from "../commands/command";
 
 export class ParserState {
 
-    private _availableOptions?: Maybe<LoadedCommandOptions>;
-    public commandInstance?: Maybe<CLICommand>;
+    private _availableOptions?: LoadedCommandOptions;
+    public commandInstance?: CLICommand;
     public options: ParsedOption[] = [];
     public positionalIndex = 0;
     public constructor() { }

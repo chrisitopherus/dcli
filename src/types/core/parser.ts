@@ -41,7 +41,7 @@ export type ParsedOption = ParsedFlag | ParsedValueOption | ParsedPositional | P
 
 export interface ParserStepSuccess {
     success: true;
-    next: Maybe<ParserStep>;
+    next?: ParserStep;
 }
 
 export interface ParserStepFailure {
